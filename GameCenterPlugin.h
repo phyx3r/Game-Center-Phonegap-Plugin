@@ -10,9 +10,14 @@
 #import <GameKit/GameKit.h>
 #import "PhoneGapCommand.h"
 
-@interface GameCenterPlugin : PhoneGapCommand {
+@interface GameCenterPlugin : PhoneGapCommand <GKLeaderboardViewControllerDelegate,GKAchievementViewControllerDelegate> {
 
 }
+
 - (void)authenticateLocalPlayer:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)reportScore:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)showLeaderboard:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)showAchievements:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)reportAchievementIdentifier:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 
 @end
