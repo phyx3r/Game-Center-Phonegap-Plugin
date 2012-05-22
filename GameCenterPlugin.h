@@ -7,10 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GameKit/GameKit.h>
-#import "PhoneGapCommand.h"
 
-@interface GameCenterPlugin : PhoneGapCommand <GKLeaderboardViewControllerDelegate,GKAchievementViewControllerDelegate> {
+#ifdef CORDOVA_FRAMEWORK
+#import <Cordova/CDVPlugin.h>
+#else
+#import "CDVPlugin.h"
+#endif
+
+#import <GameKit/GameKit.h>
+
+@interface GameCenterPlugin : CDVPlugin <GKLeaderboardViewControllerDelegate,GKAchievementViewControllerDelegate> {
 
 }
 
