@@ -7,7 +7,11 @@
 //
 
 #import "GameCenterPlugin.h"
-#import "PhoneGapViewController.h"
+#ifdef CORDOVA_FRAMEWORK
+#import <Cordova/CDVViewController.h>
+#else
+#import "CDVViewController.h"
+#endif
 
 @implementation GameCenterPlugin
 
@@ -17,12 +21,12 @@
 		if (error == nil)
 		{
 			NSString* jsCallback = [NSString stringWithFormat:@"GameCenter._userDidLogin();",@""];
-			[webView stringByEvaluatingJavaScriptFromString:jsCallback];
+			[self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 		}
 		else
 		{
 			NSString* jsCallback = [NSString stringWithFormat:@"GameCenter._userDidFailLogin();",@""];
-			[webView stringByEvaluatingJavaScriptFromString:jsCallback];
+			[self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 		}
 	}];
 }
@@ -40,10 +44,10 @@
 		if (error != nil)
 		{
 			NSString* jsCallback = [NSString stringWithFormat:@"GameCenter._userDidSubmitScore();",@""];
-			[webView stringByEvaluatingJavaScriptFromString:jsCallback];
+			[self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 		} else {
 			NSString* jsCallback = [NSString stringWithFormat:@"GameCenter._userDidFailSubmitScore();",@""];
-			[webView stringByEvaluatingJavaScriptFromString:jsCallback];			
+			[self.webView stringByEvaluatingJavaScriptFromString:jsCallback];			
 		}
     }];
 }
@@ -55,7 +59,7 @@
     {
         leaderboardController.leaderboardDelegate = self;
 		leaderboardController.category = (NSString*) [arguments objectAtIndex:0];
-		PhoneGapViewController* cont = (PhoneGapViewController*)[super appViewController];
+		CDVViewController* cont = (CDVViewController*)[super viewController];
         [cont presentModalViewController: leaderboardController animated: YES];
     }
 }
@@ -66,7 +70,7 @@
     if (achievements != nil)
     {
         achievements.achievementDelegate = self;
-        PhoneGapViewController* cont = (PhoneGapViewController*)[super appViewController];
+        CDVViewController* cont = (CDVViewController*)[super viewController];
 		[cont presentModalViewController: achievements animated: YES];
     }
     [achievements release];
@@ -74,13 +78,13 @@
 
 - (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
 {
-	PhoneGapViewController* cont = (PhoneGapViewController*)[super appViewController];
+	CDVViewController* cont = (CDVViewController*)[super viewController];
     [cont dismissModalViewControllerAnimated:YES];
 }
 
 - (void)achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
 {
-	PhoneGapViewController* cont = (PhoneGapViewController*)[super appViewController];
+	CDVViewController* cont = (CDVViewController*)[super viewController];
     [cont dismissModalViewControllerAnimated:YES];
 }
 
